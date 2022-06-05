@@ -1,0 +1,36 @@
+---
+/* stylesheet import */
+import "../styles/global.css";
+
+/* page properties */
+const { title } = Astro.props;
+---
+
+<!-- This site was developed by Lokkee Studios (https://lokkeestudios.com) -->
+<html lang="en" class="scroll-smooth">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
+
+    <!-- google font imports -->
+    <link crossorigin rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap"
+    />
+	</head>
+	<body class="bg-slate-900 text-white">
+    <!-- page contents -->
+    <slot />
+  </body>
+</html>

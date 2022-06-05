@@ -1,14 +1,11 @@
 ---
-
+/* layout import */
+import BaseLayout from "../layouts/BaseLayout.astro";
 ---
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
-		<title>Lockey | The ultimate Encrypter from the Future</title>
-	</head>
-	<body>
-		<h1>Lockey</h1>
-    <h2>The ultimate Encrypter from the Future</h2>
-	</body>
-</html>
+
+<BaseLayout title="Lockey | The ultimate Encrypter from the Future">
+  <main>
+		<h1 class="text-6xl font-display font-bold mb-2">Lockey</h1>
+    <h2 class="text-3xl font-display font-bold mb-8">The ultimate Encrypter from the Future</h2>
+  </main>
+</BaseLayout>
