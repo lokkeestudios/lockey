@@ -1,11 +1,17 @@
 ---
 /* layout import */
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+/* component imports */
+import CipherTabs from "../components/CipherTabs";
 ---
 
 <BaseLayout title="Lockey | The ultimate Encrypter from the Future">
   <main>
-		<h1 class="text-6xl font-display font-bold mb-2">Lockey</h1>
+		<h1 class="text-6xl font-display font-bold mb-2 text-violet-700">Lockey</h1>
     <h2 class="text-3xl font-display font-bold mb-8">The ultimate Encrypter from the Future</h2>
+
+    <!-- encryption / decryption tabs -->
+    <CipherTabs client:load />
   </main>
 </BaseLayout>
