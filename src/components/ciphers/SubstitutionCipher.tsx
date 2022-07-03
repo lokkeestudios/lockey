@@ -12,7 +12,7 @@ function SubstitutionCipher() {
     ciphertext: '',
   });
 
-  const [includeForeignChars, setIncludeForeignChars] = useState(true);
+  const [isIncludingForeignChars, setIsIncludingForeignChars] = useState(true);
 
   function setDataValue(name: string, value: string) {
     setData((values) => ({ ...values, [name]: value }));
@@ -36,10 +36,10 @@ function SubstitutionCipher() {
         plaintext,
         plaintextAlphabet,
         ciphertextAlphabet,
-        includeForeignChars
+        isIncludingForeignChars
       )
     );
-  }, [data, includeForeignChars]);
+  }, [data, isIncludingForeignChars]);
 
   const decode = useCallback(() => {
     const { ciphertext, ciphertextAlphabet, plaintextAlphabet } = data;
@@ -50,10 +50,10 @@ function SubstitutionCipher() {
         ciphertext,
         ciphertextAlphabet,
         plaintextAlphabet,
-        includeForeignChars
+        isIncludingForeignChars
       )
     );
-  }, [data, includeForeignChars]);
+  }, [data, isIncludingForeignChars]);
 
   return (
     <>
@@ -89,7 +89,7 @@ function SubstitutionCipher() {
           />
           <div className="-mb-1 border-b-1 border-neutrals-700" />
           <Checkbox
-            state={[includeForeignChars, setIncludeForeignChars]}
+            state={[isIncludingForeignChars, setIsIncludingForeignChars]}
             label="Include foreign characters"
           />
         </div>

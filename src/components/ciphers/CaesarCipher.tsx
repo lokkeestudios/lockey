@@ -4,7 +4,7 @@ import { ShiftScope } from '../../utils/encryptionUtils';
 import { parseIntOrZero } from '../../utils/textUtils';
 import Button from '../form/Button';
 import Checkbox from '../form/Checkbox';
-import RadioGroup from '../form/RadioGroup';
+import ShiftScopeRadioGroup from '../form/ShiftScopeRadioGroup';
 import TextInput from '../form/TextInput';
 
 function CaesarCipher() {
@@ -14,9 +14,9 @@ function CaesarCipher() {
     ciphertext: '',
   });
 
-  const [scope, setScope] = useState(ShiftScope.ALPHABET);
+  const [shiftScope, setShiftScope] = useState(ShiftScope.ALPHABET);
 
-  const [includeForeignChars, setIncludeForeignChars] = useState(true);
+  const [isIncludingForeignChars, setIsIncludingForeignChars] = useState(true);
 
   function setDataValue(name: string, value: string) {
     setData((values) => ({ ...values, [name]: value }));
@@ -37,9 +37,9 @@ function CaesarCipher() {
 
     setDataValue(
       'ciphertext',
-      caesarEncode(plaintext, shift, scope, includeForeignChars)
+      caesarEncode(plaintext, shift, shiftScope, isIncludingForeignChars)
     );
-  }, [data, scope, includeForeignChars]);
+  }, [data, shiftScope, isIncludingForeignChars]);
 
   const decode = useCallback(() => {
     const { ciphertext } = data;
@@ -47,9 +47,9 @@ function CaesarCipher() {
 
     setDataValue(
       'plaintext',
-      caesarEncode(ciphertext, -shift, scope, includeForeignChars)
+      caesarEncode(ciphertext, -shift, shiftScope, isIncludingForeignChars)
     );
-  }, [data, scope, includeForeignChars]);
+  }, [data, shiftScope, isIncludingForeignChars]);
 
   return (
     <>
@@ -77,31 +77,48 @@ function CaesarCipher() {
             <div className="relative flex items-center divide-x-1 divide-neutrals-700 bg-neutrals-800 text-base font-normal">
               <input
                 type="text"
-                name="shift"
                 id="shift"
+                name="shift"
                 value={data.shift}
-                placeholder="e.g. 2"
                 onChange={handleChange}
+                placeholder="e.g. 2"
                 className="w-full rounded-md border-1 border-brand bg-transparent p-3 pr-16 shadow-glow shadow-brand/50 transition-colors duration-200 focus:shadow-brand focus:outline-none"
               />
               <span className="pointer-events-none absolute right-0 rounded-r-md p-3 text-center font-mono text-xs">
                 {`A → ${shiftChar(
                   'A',
                   parseIntOrZero(data.shift),
-                  scope,
+                  shiftScope,
                   true
                 )}`}
               </span>
             </div>
+            <p className="flex items-center text-xs font-normal normal-case text-rose-600">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="mr-1 h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              Alphabets must be of same length
+            </p>
           </label>
-          <RadioGroup
+          <ShiftScopeRadioGroup
             label="Scope"
-            state={[scope, setScope]}
+            state={[shiftScope, setShiftScope]}
             options={Object.values(ShiftScope)}
           />
           <div className="-my-1 border-b-1 border-neutrals-700" />
           <Checkbox
-            state={[includeForeignChars, setIncludeForeignChars]}
+            state={[isIncludingForeignChars, setIsIncludingForeignChars]}
             label="Include foreign characters"
           />
         </div>

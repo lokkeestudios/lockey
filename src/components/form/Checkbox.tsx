@@ -6,7 +6,7 @@ interface Props {
   state: [boolean, Dispatch<SetStateAction<boolean>>];
 }
 
-export default function Checkbox({ label, state }: Props) {
+function Checkbox({ label, state }: Props) {
   const [isChecked, setIsChecked] = state;
 
   return (
@@ -38,3 +38,5 @@ export default function Checkbox({ label, state }: Props) {
     </Switch>
   );
 }
+
+export default Checkbox;
