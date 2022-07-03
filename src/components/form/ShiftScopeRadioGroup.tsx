@@ -9,7 +9,7 @@ interface Props {
   options: ShiftScope[];
 }
 
-export default function Checkbox({ label, state, options }: Props) {
+function ShiftScopeRadioGroup({ label, state, options }: Props) {
   const [selectedOption, setSelectedOption] = state;
 
   return (
@@ -46,3 +46,5 @@ export default function Checkbox({ label, state, options }: Props) {
     </RadioGroup>
   );
 }
+
+export default ShiftScopeRadioGroup;
