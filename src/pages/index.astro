@@ -1,17 +1,21 @@
 ---
-/* layout import */
-import BaseLayout from "../layouts/BaseLayout.astro";
-
-/* component imports */
-import CipherTabs from "../components/CipherTabs";
+import CipherTabs from '../components/ciphers/CipherTabs';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Lockey | The ultimate Encrypter from the Future">
+<BaseLayout title="LOCKEY | The ultimate Encrypter from the Past">
   <main>
-		<h1 class="text-6xl font-display font-bold mb-2 text-violet-700">Lockey</h1>
-    <h2 class="text-3xl font-display font-bold mb-8">The ultimate Encrypter from the Future</h2>
+    <section
+      class="min-h-screen py-28"
+      aria-label="Encryption and Decryption Ciphers"
+    >
+      <div class="mx-auto w-10/12 2xl:w-[80%] h-full">
+        <h1 class="text-2xl md:text-3xl font-display font-bold mb-8">
+          The ultimate Encrypter from the Past
+        </h1>
 
-    <!-- encryption / decryption tabs -->
-    <CipherTabs client:load />
+        <CipherTabs client:load />
+      </div>
+    </section>
   </main>
 </BaseLayout>

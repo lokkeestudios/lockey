@@ -1,0 +1,55 @@
+---
+import site from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Imprint | LOCKEY">
+  <main>
+    <section
+      class="min-h-screen w-full flex py-24 items-center"
+      aria-label="Imprint"
+    >
+      <div class="mx-auto w-10/12 2xl:w-[80%]">
+        <h1
+          class="font-display font-bold text-5xl leading-tight md:text-7xl md:leading-tight lg:text-8xl lg:leading-tight mb-12"
+        >
+          Imprint
+        </h1>
+
+        <h2 class="font-display font-bold text-2xl lg:text-3xl mb-4">
+          Details
+        </h2>
+        <p class="text-neutrals-400 leading-relaxed max-w-prose mb-12">
+          Lokkee Studios<br />
+          Kilian Peters<br />
+          Langenfelderstraße 75<br />
+          22769 Hamburg, Germany
+        </p>
+
+        <h2 class="font-display font-bold text-2xl lg:text-3xl mb-4">
+          Contact
+        </h2>
+        <p class="text-neutrals-400 leading-relaxed max-w-prose mb-12">
+          E-Mail:
+          <a
+            class="hover:text-neutrals-50 transition-colors cursor-pointer underline"
+            href={`mailto:${site.email}`}
+            title="Hit me up"
+          >
+            {site.email}</a
+          ><br />
+        </p>
+
+        <h2 class="font-display font-bold text-2xl lg:text-3xl mb-4">
+          Content responsibility
+        </h2>
+        <a
+          class="text-neutrals-400 leading-relaxed max-w-prose hover:text-neutrals-50 transition-colors cursor-pointer underline"
+          href={site.authorURL}
+          target="_blank"
+          title="Visit the creator">Lokkee Studios</a
+        >
+      </div>
+    </section>
+  </main>
+</BaseLayout>
