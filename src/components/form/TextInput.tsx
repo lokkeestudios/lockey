@@ -6,6 +6,7 @@ interface Props {
   rows?: number;
   label: string;
   value: string;
+  error: string;
   onChange: FormEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   placeholder: string;
 }
@@ -15,6 +16,7 @@ function TextInput({
   rows = 1,
   label,
   value,
+  error,
   onChange,
   placeholder,
 }: Props) {
@@ -48,23 +50,25 @@ function TextInput({
           className={classNames(classes, 'resize-none')}
         />
       )}
-      <p className="flex items-center text-xs font-normal normal-case text-rose-600">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="mr-1 h-4 w-4"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={2}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        Alphabets must be of same length
-      </p>
+      {error && (
+        <p className="flex items-center text-xs font-normal normal-case text-rose-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="mr-1 h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          {error}
+        </p>
+      )}
     </label>
   );
 }

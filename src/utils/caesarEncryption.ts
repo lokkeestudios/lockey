@@ -16,10 +16,10 @@ const {
   POS_ASCII_0,
 } = asciiConstants;
 
-function recognizeAsAsciiChar(shiftScope: ShiftScope, char: string) {
+function isRecognizedAsAsciiChar(shiftScope: ShiftScope, char: string) {
   return shiftScope === ShiftScope.ASCII_TABLE && isAscii(char);
 }
-function recognizeAsDigit(shiftScope: ShiftScope, char: string) {
+function isRecognizedAsDigit(shiftScope: ShiftScope, char: string) {
   return shiftScope === ShiftScope.ALPHABET_AND_DIGITS && isDigit(char);
 }
 
@@ -34,7 +34,7 @@ function positiveShiftChar(
 
   let scopedShiftedCharCode = charCode;
 
-  if (recognizeAsAsciiChar(shiftScope, char)) {
+  if (isRecognizedAsAsciiChar(shiftScope, char)) {
     scopedShiftedCharCode = keepNumInRange(
       0,
       AMOUNT_ASCII_CHARACTERS,
@@ -54,7 +54,7 @@ function positiveShiftChar(
         shiftedCharCode
       );
     }
-  } else if (recognizeAsDigit(shiftScope, char)) {
+  } else if (isRecognizedAsDigit(shiftScope, char)) {
     scopedShiftedCharCode = keepNumInRange(
       POS_ASCII_0,
       AMOUNT_DIGITS,
@@ -78,9 +78,9 @@ function negativeShiftChar(
   let neutralizedShift = shift;
 
   while (neutralizedShift < 0) {
-    if (recognizeAsAsciiChar(shiftScope, char)) {
+    if (isRecognizedAsAsciiChar(shiftScope, char)) {
       neutralizedShift += AMOUNT_ASCII_CHARACTERS;
-    } else if (recognizeAsDigit(shiftScope, char)) {
+    } else if (isRecognizedAsDigit(shiftScope, char)) {
       neutralizedShift += AMOUNT_DIGITS;
     } else if (isLetter(char)) {
       neutralizedShift += AMOUNT_LETTERS;

@@ -12,6 +12,13 @@ function SubstitutionCipher() {
     ciphertext: '',
   });
 
+  const [errors, setErrors] = useState({
+    plaintext: '',
+    plaintextAlphabet: '',
+    ciphertextAlphabet: '',
+    ciphertext: '',
+  });
+
   const [isIncludingForeignChars, setIsIncludingForeignChars] = useState(true);
 
   function setDataValue(name: string, value: string) {
@@ -24,35 +31,63 @@ function SubstitutionCipher() {
 
       setDataValue(name, value);
     },
-    []
+    [data, errors]
   );
 
-  const encode = useCallback(() => {
-    const { plaintext, plaintextAlphabet, ciphertextAlphabet } = data;
+  function validate() {
+    const validationErrors = {
+      plaintext: '',
+      plaintextAlphabet: '',
+      ciphertextAlphabet: '',
+      ciphertext: '',
+    };
 
-    setDataValue(
-      'ciphertext',
-      substitutionEncode(
-        plaintext,
-        plaintextAlphabet,
-        ciphertextAlphabet,
-        isIncludingForeignChars
-      )
-    );
+    let isSuccessful = true;
+
+    if (data.plaintextAlphabet.length !== data.ciphertextAlphabet.length) {
+      const notSameLengthErrorMessage = 'Alphabets must be of same length';
+
+      validationErrors.plaintextAlphabet = notSameLengthErrorMessage;
+      validationErrors.ciphertextAlphabet = notSameLengthErrorMessage;
+
+      isSuccessful = false;
+    }
+
+    setErrors(validationErrors);
+
+    return isSuccessful;
+  }
+
+  const encode = useCallback(() => {
+    if (validate()) {
+      const { plaintext, plaintextAlphabet, ciphertextAlphabet } = data;
+
+      setDataValue(
+        'ciphertext',
+        substitutionEncode(
+          plaintext,
+          plaintextAlphabet,
+          ciphertextAlphabet,
+          isIncludingForeignChars
+        )
+      );
+    }
   }, [data, isIncludingForeignChars]);
 
   const decode = useCallback(() => {
-    const { ciphertext, ciphertextAlphabet, plaintextAlphabet } = data;
+    if (validate()) {
+      const { ciphertext, ciphertextAlphabet, plaintextAlphabet } = data;
 
-    setDataValue(
-      'plaintext',
-      substitutionEncode(
-        ciphertext,
-        ciphertextAlphabet,
-        plaintextAlphabet,
-        isIncludingForeignChars
-      )
-    );
+      setDataValue(
+        'plaintext',
+        substitutionEncode(
+          ciphertext,
+          ciphertextAlphabet,
+          plaintextAlphabet,
+          isIncludingForeignChars
+        )
+      );
+    }
   }, [data, isIncludingForeignChars]);
 
   return (
@@ -66,6 +101,7 @@ function SubstitutionCipher() {
             id="plaintext"
             label="Plaintext"
             value={data.plaintext}
+            error={errors.plaintext}
             onChange={handleChange}
             placeholder="e.g. This is a plaintext"
             rows={4}
@@ -77,6 +113,7 @@ function SubstitutionCipher() {
             id="plaintextAlphabet"
             label="Plaintext Alphabet"
             value={data.plaintextAlphabet}
+            error={errors.plaintextAlphabet}
             onChange={handleChange}
             placeholder="e.g. abcdefghijklmnopqrstuvwxyz"
           />
@@ -84,6 +121,7 @@ function SubstitutionCipher() {
             id="ciphertextAlphabet"
             label="Ciphertext Alphabet"
             value={data.ciphertextAlphabet}
+            error={errors.ciphertextAlphabet}
             onChange={handleChange}
             placeholder="e.g. zyxwvutsrqponmlkjihgfedcba"
           />
@@ -98,6 +136,7 @@ function SubstitutionCipher() {
             id="ciphertext"
             label="Ciphertext"
             value={data.ciphertext}
+            error={errors.ciphertext}
             onChange={handleChange}
             placeholder="e.g. Gsrh rh z kozrmgvcg"
             rows={4}
