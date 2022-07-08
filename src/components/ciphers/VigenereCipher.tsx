@@ -1,6 +1,6 @@
 import { FormEvent, useCallback, useState } from 'react';
 import { ShiftScope } from '../../utils/encryptionUtils';
-import { isAscii, isLetter, isLetterAndDigit } from '../../utils/textUtils';
+import { isAscii, isLetterAndDigit } from '../../utils/textUtils';
 import { vigenereDecode, vigenereEncode } from '../../utils/vigenereEncryption';
 import Button from '../form/Button';
 import Checkbox from '../form/Checkbox';
@@ -46,25 +46,29 @@ function VigenereCipher() {
 
     let isSuccessful = true;
 
-    if (shiftScope === ShiftScope.ASCII_TABLE && !isAscii(data.key)) {
-      // TODO: Clean up code, especially if-statements
+    const isNotInAsciiScope =
+      shiftScope === ShiftScope.ASCII_TABLE && !isAscii(data.key);
+    const isNotInAlphabetAndDigitsScope =
+      shiftScope === ShiftScope.ALPHABET_AND_DIGITS &&
+      !isLetterAndDigit(data.key);
+    const isNotInAlphabetScope =
+      shiftScope === ShiftScope.ASCII_TABLE && !isAscii(data.key);
+
+    if (isNotInAsciiScope) {
       const onlyAsciiCharactersErrorMessage =
         'Key must only consist of ASCII characters';
 
       validationErrors.key = onlyAsciiCharactersErrorMessage;
 
       isSuccessful = false;
-    } else if (
-      shiftScope === ShiftScope.ALPHABET_AND_DIGITS &&
-      !isLetterAndDigit(data.key)
-    ) {
+    } else if (isNotInAlphabetAndDigitsScope) {
       const onlyLettersAndDigitsErrorMessage =
         'Key must only consist of letters and digits';
 
       validationErrors.key = onlyLettersAndDigitsErrorMessage;
 
       isSuccessful = false;
-    } else if (shiftScope === ShiftScope.ALPHABET && !isLetter(data.key)) {
+    } else if (isNotInAlphabetScope) {
       const onlyLettersErrorMessage = 'Key must only consist of letters';
 
       validationErrors.key = onlyLettersErrorMessage;

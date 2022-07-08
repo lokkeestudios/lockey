@@ -16,13 +16,14 @@ function getShiftOfCharacter(shiftScope: ShiftScope, char: string) {
 
   const isRecognizedAsDigit =
     shiftScope === ShiftScope.ALPHABET_AND_DIGITS && isDigit(char);
+  const isRecognizedAsLetter =
+    shiftScope !== ShiftScope.ASCII_TABLE && isLetter(char);
 
   let shift = charCode;
 
   if (isRecognizedAsDigit) {
     shift -= POS_ASCII_0;
-  } else if (shiftScope !== ShiftScope.ASCII_TABLE && isLetter(char)) {
-    // TODO: Clean up code, especially if-statements
+  } else if (isRecognizedAsLetter) {
     if (isUpperCase(char)) {
       shift -= POS_ASCII_A_UPPERCASE;
     } else {
