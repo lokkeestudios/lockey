@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useState } from 'react';
 import { ShiftScope } from '../../utils/encryptionUtils';
+import { isAscii, isLetter, isLetterAndDigit } from '../../utils/textUtils';
 import { vigenereDecode, vigenereEncode } from '../../utils/vigenereEncryption';
 import Button from '../form/Button';
 import Checkbox from '../form/Checkbox';
@@ -8,6 +9,12 @@ import TextInput from '../form/TextInput';
 
 function VigenereCipher() {
   const [data, setData] = useState({
+    plaintext: '',
+    key: '',
+    ciphertext: '',
+  });
+
+  const [errors, setErrors] = useState({
     plaintext: '',
     key: '',
     ciphertext: '',
@@ -30,24 +37,66 @@ function VigenereCipher() {
     []
   );
 
-  const encode = useCallback(() => {
-    const { plaintext } = data;
-    const { key } = data;
+  function validate() {
+    const validationErrors = {
+      plaintext: '',
+      key: '',
+      ciphertext: '',
+    };
 
-    setDataValue(
-      'ciphertext',
-      vigenereEncode(plaintext, key, shiftScope, isIncludingForeignChars)
-    );
+    let isSuccessful = true;
+
+    if (shiftScope === ShiftScope.ASCII_TABLE && !isAscii(data.key)) {
+      // TODO: Clean up code, especially if-statements
+      const onlyAsciiCharactersErrorMessage =
+        'Key must only consist of ASCII characters';
+
+      validationErrors.key = onlyAsciiCharactersErrorMessage;
+
+      isSuccessful = false;
+    } else if (
+      shiftScope === ShiftScope.ALPHABET_AND_DIGITS &&
+      !isLetterAndDigit(data.key)
+    ) {
+      const onlyLettersAndDigitsErrorMessage =
+        'Key must only consist of letters and digits';
+
+      validationErrors.key = onlyLettersAndDigitsErrorMessage;
+
+      isSuccessful = false;
+    } else if (shiftScope === ShiftScope.ALPHABET && !isLetter(data.key)) {
+      const onlyLettersErrorMessage = 'Key must only consist of letters';
+
+      validationErrors.key = onlyLettersErrorMessage;
+
+      isSuccessful = false;
+    }
+
+    setErrors(validationErrors);
+
+    return isSuccessful;
+  }
+
+  const encode = useCallback(() => {
+    if (validate()) {
+      const { plaintext, key } = data;
+
+      setDataValue(
+        'ciphertext',
+        vigenereEncode(plaintext, key, shiftScope, isIncludingForeignChars)
+      );
+    }
   }, [data, shiftScope, isIncludingForeignChars]);
 
   const decode = useCallback(() => {
-    const { ciphertext } = data;
-    const { key } = data;
+    if (validate()) {
+      const { ciphertext, key } = data;
 
-    setDataValue(
-      'plaintext',
-      vigenereDecode(ciphertext, key, shiftScope, isIncludingForeignChars)
-    );
+      setDataValue(
+        'plaintext',
+        vigenereDecode(ciphertext, key, shiftScope, isIncludingForeignChars)
+      );
+    }
   }, [data, shiftScope, isIncludingForeignChars]);
 
   return (
@@ -61,6 +110,7 @@ function VigenereCipher() {
             id="plaintext"
             label="Plaintext"
             value={data.plaintext}
+            error={errors.plaintext}
             onChange={handleChange}
             placeholder="e.g. This is a plaintext"
             rows={4}
@@ -72,6 +122,7 @@ function VigenereCipher() {
             id="key"
             label="Key"
             value={data.key}
+            error={errors.key}
             onChange={handleChange}
             placeholder="e.g. KEY"
           />
@@ -91,6 +142,7 @@ function VigenereCipher() {
             id="ciphertext"
             label="Ciphertext"
             value={data.ciphertext}
+            error={errors.ciphertext}
             onChange={handleChange}
             placeholder="e.g. Dlgc mq k tjkmldivd"
             rows={4}

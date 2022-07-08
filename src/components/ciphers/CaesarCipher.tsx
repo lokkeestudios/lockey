@@ -49,9 +49,9 @@ function CaesarCipher() {
     const isShiftStringConvertedToNaN = Number.isNaN(parseInt(data.shift, 10));
 
     if (isShiftStringConvertedToNaN) {
-      const notANumberErrorMessage = 'Shift must be a number';
+      const typeOfNumberErrorMessage = 'Shift must be a number';
 
-      validationErrors.shift = notANumberErrorMessage;
+      validationErrors.shift = typeOfNumberErrorMessage;
 
       isSuccessful = false;
     }

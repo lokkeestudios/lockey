@@ -45,10 +45,10 @@ function SubstitutionCipher() {
     let isSuccessful = true;
 
     if (data.plaintextAlphabet.length !== data.ciphertextAlphabet.length) {
-      const notSameLengthErrorMessage = 'Alphabets must be of same length';
+      const equalLengthErrorMessage = 'Alphabets must be of same length';
 
-      validationErrors.plaintextAlphabet = notSameLengthErrorMessage;
-      validationErrors.ciphertextAlphabet = notSameLengthErrorMessage;
+      validationErrors.plaintextAlphabet = equalLengthErrorMessage;
+      validationErrors.ciphertextAlphabet = equalLengthErrorMessage;
 
       isSuccessful = false;
     }

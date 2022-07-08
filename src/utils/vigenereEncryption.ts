@@ -1,24 +1,60 @@
 import { shiftChar } from './caesarEncryption';
-import { ShiftScope } from './encryptionUtils';
-import { keepNumInRange } from './textUtils';
+import { asciiConstants, ShiftScope } from './encryptionUtils';
+import {
+  isAscii,
+  isDigit,
+  isLetter,
+  isUpperCase,
+  keepNumInRange,
+} from './textUtils';
+
+const { POS_ASCII_A_UPPERCASE, POS_ASCII_A_LOWERCASE, POS_ASCII_0 } =
+  asciiConstants;
+
+function getShiftOfCharacter(shiftScope: ShiftScope, char: string) {
+  const charCode = char.charCodeAt(0);
+
+  const isRecognizedAsDigit =
+    shiftScope === ShiftScope.ALPHABET_AND_DIGITS && isDigit(char);
+
+  let shift = charCode;
+
+  if (isRecognizedAsDigit) {
+    shift -= POS_ASCII_0;
+  } else if (shiftScope !== ShiftScope.ASCII_TABLE && isLetter(char)) {
+    // TODO: Clean up code, especially if-statements
+    if (isUpperCase(char)) {
+      shift -= POS_ASCII_A_UPPERCASE;
+    } else {
+      shift -= POS_ASCII_A_LOWERCASE;
+    }
+  }
+
+  return shift;
+}
 
 function doEncode(
   text: string,
   key: string,
-  scope: ShiftScope,
+  shiftScope: ShiftScope,
   isIncludingForeignChars: boolean,
   shiftDirectionMultiplier: -1 | 1
 ) {
+  if (!isAscii(key)) {
+    throw new Error('Key must only consist of ASCII characters');
+  }
+
   const encodedChars: string[] = [];
 
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
-    const shift = key.charCodeAt(keepNumInRange(0, key.length, i)) - 65;
+    const keyChar = key[keepNumInRange(0, key.length, i)];
+    const shift = getShiftOfCharacter(shiftScope, keyChar);
 
     const shiftedChar = shiftChar(
       char,
       shiftDirectionMultiplier * shift,
-      scope,
+      shiftScope,
       isIncludingForeignChars
     );
 
@@ -33,7 +69,7 @@ function doEncode(
 function vigenereEncode(
   text: string,
   key: string,
-  scope: ShiftScope,
+  shiftScope: ShiftScope,
   isIncludingForeignChars: boolean
 ) {
   const shiftDirectionMultiplier = 1;
@@ -41,7 +77,7 @@ function vigenereEncode(
   return doEncode(
     text,
     key,
-    scope,
+    shiftScope,
     isIncludingForeignChars,
     shiftDirectionMultiplier
   );
@@ -50,7 +86,7 @@ function vigenereEncode(
 function vigenereDecode(
   text: string,
   key: string,
-  scope: ShiftScope,
+  shiftScope: ShiftScope,
   isIncludingForeignChars: boolean
 ) {
   const shiftDirectionMultiplier = -1;
@@ -58,7 +94,7 @@ function vigenereDecode(
   return doEncode(
     text,
     key,
-    scope,
+    shiftScope,
     isIncludingForeignChars,
     shiftDirectionMultiplier
   );
