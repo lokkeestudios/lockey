@@ -13,53 +13,66 @@ function parseIntOrZero(string: string) {
 }
 
 /**
- * Checks whether a {@link char} is part of the ASCII table
+ * Checks whether a {@link string} only consists of ascii characters
  *
- * @param char - character to check
+ * @param string - character to check
  *
  * @return result of the check
  */
-function isAscii(char: string): boolean {
+function isAscii(string: string): boolean {
   const asciiCharsRegex = /^[\x00-\x7F]*$/;
 
-  return asciiCharsRegex.test(char);
+  return asciiCharsRegex.test(string);
 }
 
 /**
- * Checks whether a {@link char} is a letter
+ * Checks whether a {@link string} only consists of letters
  *
- * @param char - character to check
+ * @param string - string to check
  *
  * @return result of the check
  */
-function isLetter(char: string): boolean {
-  const lettersRegex = /[a-z]/i;
+function isLetter(string: string): boolean {
+  const lettersRegex = /^[a-z]*$/i;
 
-  return lettersRegex.test(char);
+  return lettersRegex.test(string);
 }
 
 /**
- * Checks whether a {@link char} is a digit
+ * Checks whether a {@link string} only consists of digits
  *
- * @param char - character to check
+ * @param string - string to check
  *
  * @return result of the check
  */
-function isDigit(char: string): boolean {
-  const digitsRegex = /[0-9]/;
+function isDigit(string: string): boolean {
+  const digitsRegex = /^[0-9]*$/;
 
-  return digitsRegex.test(char);
+  return digitsRegex.test(string);
 }
 
 /**
- * Checks whether a {@link char} is upper case
+ * Checks whether a {@link string} only consists of letters and digits
  *
- * @param char - character to check
+ * @param string - string to check
  *
  * @return result of the check
  */
-function isUpperCase(char: string): boolean {
-  if (char === char.toUpperCase()) {
+function isLetterAndDigit(string: string): boolean {
+  const lettersAndDigitsRegex = /^[a-z0-9]*$/i;
+
+  return lettersAndDigitsRegex.test(string);
+}
+
+/**
+ * Checks whether a {@link string} is fully upper case
+ *
+ * @param string - string to check
+ *
+ * @return result of the check
+ */
+function isUpperCase(string: string): boolean {
+  if (string === string.toUpperCase()) {
     return true;
   }
   return false;
@@ -96,6 +109,7 @@ export {
   isAscii,
   isLetter,
   isDigit,
+  isLetterAndDigit,
   isUpperCase,
   keepNumInRange,
   classNames,
