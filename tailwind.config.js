@@ -39,6 +39,9 @@ module.exports = {
       },
       keyframes: {
         glitch: {
+          '0%': {
+            clip: 'rect(64px,9999px,117px,0)',
+          },
           '10.5263%': {
             clip: 'rect(65px,9999px,200px,0)',
           },
