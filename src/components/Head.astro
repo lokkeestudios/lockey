@@ -1,0 +1,52 @@
+---
+import site from '../data/site';
+import '../styles/global.css';
+
+const { title } = Astro.props;
+---
+
+<head>
+  <!-- core information -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={site.description} />
+
+  <!-- open graph details -->
+  <meta property="og:site_name" content="Lockey" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={site.description} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={site.url} />
+  <meta property="og:image" content="/icon.png" />
+
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
+  <link rel="apple-touch-icon" href="/icon.png" />
+
+  <!-- manifest and theme color -->
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#6919ff" />
+
+  <!-- google font imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap"
+  />
+  <link
+    rel="stylesheet"
+    media="print"
+    onload="this.onload=null;this.removeAttribute('media');"
+    href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap"
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap"
+    />
+  </noscript>
+</head>
