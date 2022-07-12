@@ -1,5 +1,6 @@
 import { Switch } from '@headlessui/react';
 import { Dispatch, SetStateAction } from 'react';
+import { classNames } from '../../utils/textUtils';
 
 interface Props {
   label: string;
@@ -16,13 +17,17 @@ function Checkbox({ label, state }: Props) {
       className="flex items-center"
     >
       <div
-        className={`${
+        className={classNames(
+          'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border-1 border-brand shadow-glow',
           isChecked ? 'shadow-brand/90' : 'shadow-brand/60'
-        } mr-2 flex h-4 w-4 items-center justify-center rounded-sm border-1 border-brand shadow-glow`}
+        )}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className={`${isChecked ? 'inline-block' : 'hidden'} text-brand`}
+          className={classNames(
+            'w-4 text-brand',
+            isChecked ? 'absolute' : 'hidden'
+          )}
           viewBox="0 0 20 20"
           fill="currentColor"
           stroke="currentColor"
