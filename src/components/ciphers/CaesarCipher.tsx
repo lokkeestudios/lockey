@@ -117,7 +117,7 @@ function CaesarCipher() {
                 value={data.shift}
                 onChange={handleChange}
                 placeholder="e.g. 2"
-                className="w-full rounded-md border-1 border-brand bg-transparent p-3 pr-16 shadow-glow shadow-brand/50 transition-colors duration-200 focus:shadow-brand focus:outline-none"
+                className="w-full rounded-md border-1 border-brand bg-neutrals-800 p-3 pr-16 shadow-glow shadow-brand/50 transition-colors duration-200 [-webkit-appearance:none] focus:shadow-brand focus:outline-none"
               />
               <span className="pointer-events-none absolute right-0 rounded-r-md p-3 text-center font-mono text-xs">
                 {`A → ${shiftChar(

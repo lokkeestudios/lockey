@@ -21,7 +21,7 @@ function TextInput({
   placeholder,
 }: Props) {
   const classes =
-    'rounded-md border-1 border-brand bg-neutrals-800 p-3 text-base font-normal shadow-glow shadow-brand/50 transition-colors duration-200 focus:shadow-brand focus:outline-none';
+    'rounded-md border-1 border-brand bg-neutrals-800 p-3 text-base font-normal shadow-glow shadow-brand/50 transition-colors duration-200 focus:shadow-brand focus:outline-none [-webkit-appearance:none]';
 
   return (
     <label
