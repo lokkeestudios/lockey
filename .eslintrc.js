@@ -1,9 +1,18 @@
 module.exports = {
-  extends: ['airbnb', 'airbnb-typescript', 'prettier', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'eslint:recommended'],
+  extends: ['airbnb', 'prettier', 'plugin:react/recommended', 'eslint:recommended'],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.json'
-  },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'airbnb-typescript'
+      ],
+      parserOptions: {
+        project: ['./tsconfig.json'],
+      },
+    },
+  ],
   plugins: ['prettier', 'react', '@typescript-eslint'],
   rules: {
     'no-unused-vars': 'warn',
