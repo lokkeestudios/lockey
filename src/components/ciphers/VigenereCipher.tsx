@@ -1,6 +1,6 @@
 import { FormEvent, useCallback, useState } from 'react';
 import { ShiftScope } from '../../utils/encryptionUtils';
-import { isAscii, isLetterAndDigit } from '../../utils/textUtils';
+import { isAscii, isLetter, isLetterAndDigit } from '../../utils/textUtils';
 import { vigenereDecode, vigenereEncode } from '../../utils/vigenereEncryption';
 import Button from '../form/Button';
 import Checkbox from '../form/Checkbox';
@@ -52,7 +52,7 @@ function VigenereCipher() {
       shiftScope === ShiftScope.ALPHABET_AND_DIGITS &&
       !isLetterAndDigit(data.key);
     const isNotInAlphabetScope =
-      shiftScope === ShiftScope.ASCII_TABLE && !isAscii(data.key);
+      shiftScope === ShiftScope.ALPHABET && !isLetter(data.key);
 
     if (isNotInAsciiScope) {
       const onlyAsciiCharactersErrorMessage =
