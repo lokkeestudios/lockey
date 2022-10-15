@@ -2,6 +2,7 @@ import { Tab } from '@headlessui/react';
 import { classNames } from '../../utils/textUtils';
 
 import CaesarCipher from './CaesarCipher';
+import RsaCipher from './RsaCipher';
 import SubstitutionCipher from './SubstitutionCipher';
 import VigenereCipher from './VigenereCipher';
 
@@ -17,6 +18,10 @@ const cipherTabs = [
   {
     name: 'Substitution',
     component: <SubstitutionCipher />,
+  },
+  {
+    name: 'RSA',
+    component: <RsaCipher />,
   },
 ];
 
