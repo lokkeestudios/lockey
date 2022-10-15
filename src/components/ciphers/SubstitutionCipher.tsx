@@ -44,7 +44,9 @@ function SubstitutionCipher() {
 
     let isSuccessful = true;
 
-    if (data.plaintextAlphabet.length !== data.ciphertextAlphabet.length) {
+    const { plaintextAlphabet, ciphertextAlphabet } = data;
+
+    if (plaintextAlphabet.length !== ciphertextAlphabet.length) {
       const equalLengthErrorMessage = 'Alphabets must be of same length';
 
       validationErrors.plaintextAlphabet = equalLengthErrorMessage;

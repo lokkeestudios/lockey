@@ -46,13 +46,14 @@ function VigenereCipher() {
 
     let isSuccessful = true;
 
+    const { key } = data;
+
     const isNotInAsciiScope =
-      shiftScope === ShiftScope.ASCII_TABLE && !isAscii(data.key);
+      shiftScope === ShiftScope.ASCII_TABLE && !isAscii(key);
     const isNotInAlphabetAndDigitsScope =
-      shiftScope === ShiftScope.ALPHABET_AND_DIGITS &&
-      !isLetterAndDigit(data.key);
+      shiftScope === ShiftScope.ALPHABET_AND_DIGITS && !isLetterAndDigit(key);
     const isNotInAlphabetScope =
-      shiftScope === ShiftScope.ALPHABET && !isLetter(data.key);
+      shiftScope === ShiftScope.ALPHABET && !isLetter(key);
 
     if (isNotInAsciiScope) {
       const onlyAsciiCharactersErrorMessage =
